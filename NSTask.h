@@ -5,10 +5,6 @@
 //  Created by obaby on 14-2-10.
 //
 //
-
-#ifndef ipacracker_NSTask_h
-#define ipacracker_NSTask_h
-
 /*	NSTask.h
  Copyright (c) 1996-2007, Apple Inc. All rights reserved.
  */
@@ -26,15 +22,11 @@
 //   { Name = NSTaskDidTerminateNotification; object = task; }
 //
 
-- (id)init;
+- (instancetype)init;
 
 // set parameters
 // these methods can only be done before a launch
-- (void)setLaunchPath:(NSString *)path;
-- (void)setArguments:(NSArray *)arguments;
-- (void)setEnvironment:(NSDictionary *)dict;
 // if not set, use current
-- (void)setCurrentDirectoryPath:(NSString *)path;
 // if not set, use current
 
 // set standard I/O channels; may be either an NSFileHandle or an NSPipe
@@ -43,10 +35,10 @@
 - (void)setStandardError:(id)error;
 
 // get parameters
-- (NSString *)launchPath;
-- (NSArray *)arguments;
-- (NSDictionary *)environment;
-- (NSString *)currentDirectoryPath;
+@property (NS_NONATOMIC_IOSONLY, copy) NSString *launchPath;
+@property (NS_NONATOMIC_IOSONLY, copy) NSArray *arguments;
+@property (NS_NONATOMIC_IOSONLY, copy) NSDictionary *environment;
+@property (NS_NONATOMIC_IOSONLY, copy) NSString *currentDirectoryPath;
 
 // get standard I/O channels; could be either an NSFileHandle or an NSPipe
 - (id)standardInput;
@@ -59,14 +51,14 @@
 - (void)interrupt; // Not always possible. Sends SIGINT.
 - (void)terminate; // Not always possible. Sends SIGTERM.
 
-- (BOOL)suspend;
-- (BOOL)resume;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL suspend;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL resume;
 
 // status
-- (int)processIdentifier;
-- (BOOL)isRunning;
+@property (NS_NONATOMIC_IOSONLY, readonly) int processIdentifier; 
+@property (NS_NONATOMIC_IOSONLY, getter=isRunning, readonly) BOOL running;
 
-- (int)terminationStatus;
+@property (NS_NONATOMIC_IOSONLY, readonly) int terminationStatus;
 
 @end
 
@@ -82,5 +74,3 @@
 
 FOUNDATION_EXPORT NSString * const NSTaskDidTerminateNotification;
 
-
-#endif
